@@ -1,177 +1,75 @@
 # NBC Bank GitOps Repository
 
-This repository contains Kubernetes manifests for deploying the NBC Bank application using GitOps principles with ArgoCD.
+A simple GitOps repository for deploying the NBC Bank application on Kubernetes using Flux.
 
-## Repository Structure
+## What This Is
+
+This repository contains everything needed to run the NBC Bank application on a Kubernetes cluster. It uses GitOps principles, which means the cluster automatically stays in sync with what's defined here.
+
+## What's Inside
 
 ```
 nbc-bank-gitops/
-├── README.md                    # This documentation
-├── .gitignore                  # Git ignore patterns
-├── argocd-application.yaml     # ArgoCD application definition
-└── templates/                  # Kubernetes manifests
-    ├── mysql-deployment.yaml   # MySQL database deployment
-    ├── nbc-app-deployment.yaml # NBC Bank application deployment
-    ├── secrets.yaml            # Kubernetes secrets
-    └── services.yaml           # Services and ingress configuration
+├── clusters/my-cluster/           # Cluster configuration
+│   ├── mysql-deployment.yaml      # MySQL database setup
+│   ├── nbc-app-deployment.yaml   # The main bank application
+│   ├── services.yaml              # Network services
+│   ├── secrets.yaml               # Database passwords & keys
+│   └── flux-system/               # Flux GitOps controller
+└── templates/                      # Reusable templates
 ```
 
-## Prerequisites
+## What Gets Deployed
 
-- Kubernetes cluster (1.20+)
-- ArgoCD installed and configured
-- NGINX Ingress Controller
-- cert-manager (for SSL certificates)
-- Storage class for persistent volumes
+### 🗄️ MySQL Database
+- A single MySQL 8.0 instance
+- Stores all the bank data
+- Runs on port 3306
 
-## Components
+### 🏦 NBC Bank App
+- The main banking application
+- Runs 3 copies for reliability
+- Built from `fran123pv/nbc-bank-app:latest`
+- Listens on port 5000
 
-### 1. MySQL Database
-- **Deployment**: Single replica MySQL 8.0 instance
-- **Storage**: 10Gi persistent volume claim
-- **Security**: Secrets-based authentication
-- **Resources**: 256Mi-512Mi memory, 250m-500m CPU
+### 🔐 Secrets
+- Database username/password
+- JWT signing key for authentication
 
-### 2. NBC Bank Application
-- **Deployment**: 3 replicas for high availability
-- **Image**: `nbc-bank/app:latest`
-- **Port**: 8080 (container), 80 (service)
-- **Health Checks**: Liveness and readiness probes
-- **Resources**: 128Mi-256Mi memory, 100m-200m CPU
+## Getting Started
 
-### 3. Services
-- **MySQL Service**: ClusterIP on port 3306
-- **App Service**: LoadBalancer on port 80
-- **Ingress**: NGINX-based with SSL termination
+### Prerequisites
+- A Kubernetes cluster
+- Flux installed (for GitOps)
 
-### 4. Secrets
-- **MySQL Secrets**: Database credentials
-- **App Secrets**: JWT signing keys
+### Quick Deploy
+1. Clone this repository
+2. Point Flux to this repo
+3. Watch it deploy automatically!
 
-## Deployment
+## How It Works
 
-### Using ArgoCD
+1. **Flux watches this repository** for changes
+2. **When you push changes**, Flux automatically updates the cluster
+3. **The app stays running** with the latest configuration
 
-1. **Update Repository URL**: Modify `argocd-application.yaml` with your actual repository URL
-2. **Apply ArgoCD Application**:
-   ```bash
-   kubectl apply -f argocd-application.yaml
-   ```
+## Making Changes
 
-### Manual Deployment
+Want to update the app version? Just change the image tag in `nbc-app-deployment.yaml` and push. Flux will handle the rest!
 
-1. **Create Namespace**:
-   ```bash
-   kubectl create namespace nbc-bank
-   ```
+## Need Help?
 
-2. **Apply Secrets**:
-   ```bash
-   kubectl apply -f templates/secrets.yaml
-   ```
+- Check if pods are running: `kubectl get pods -n nbc`
+- View app logs: `kubectl logs -f deployment/nbc-app -n nbc`
+- Check services: `kubectl get svc -n nbc`
 
-3. **Deploy Database**:
-   ```bash
-   kubectl apply -f templates/mysql-deployment.yaml
-   ```
+## Security Note
 
-4. **Deploy Application**:
-   ```bash
-   kubectl apply -f templates/nbc-app-deployment.yaml
-   ```
+⚠️ **Important**: The secrets in this repo are examples. In production, you should:
+- Use proper secret management
+- Rotate passwords regularly
+- Never commit real secrets to git
 
-5. **Apply Services**:
-   ```bash
-   kubectl apply -f templates/services.yaml
-   ```
+---
 
-## Configuration
 
-### Environment Variables
-
-The NBC Bank application expects the following environment variables:
-- `DB_HOST`: MySQL service hostname
-- `DB_PORT`: MySQL service port
-- `DB_NAME`: Database name
-- `DB_USER`: Database username
-- `DB_PASSWORD`: Database password
-- `JWT_SECRET`: JWT signing secret
-
-### Secrets Management
-
-**Important**: Update the base64-encoded secrets in `templates/secrets.yaml` with your actual values:
-
-```bash
-# Generate base64 encoded secrets
-echo -n "your-actual-password" | base64
-echo -n "your-super-secret-jwt-key" | base64
-```
-
-### Domain Configuration
-
-Update the ingress host in `templates/services.yaml`:
-```yaml
-hosts:
-  - nbc-bank.your-domain.com  # Replace with your actual domain
-```
-
-## Monitoring and Health Checks
-
-- **Liveness Probe**: `/health` endpoint every 10 seconds
-- **Readiness Probe**: `/ready` endpoint every 5 seconds
-- **Resource Limits**: Configured for both CPU and memory
-
-## Security Considerations
-
-- Secrets are stored as Kubernetes secrets (not in plain text)
-- Database access is restricted to the application namespace
-- SSL/TLS termination at the ingress level
-- Resource limits prevent resource exhaustion
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Database Connection Failures**:
-   - Verify MySQL pod is running
-   - Check secret references
-   - Validate network policies
-
-2. **Application Startup Issues**:
-   - Check resource availability
-   - Verify secret mounting
-   - Review health check endpoints
-
-3. **Ingress Issues**:
-   - Ensure NGINX ingress controller is running
-   - Verify TLS certificate configuration
-   - Check domain DNS resolution
-
-### Debug Commands
-
-```bash
-# Check pod status
-kubectl get pods -n nbc-bank
-
-# View logs
-kubectl logs -f deployment/nbc-app -n nbc-bank
-kubectl logs -f deployment/mysql -n nbc-bank
-
-# Check services
-kubectl get svc -n nbc-bank
-
-# Verify secrets
-kubectl get secrets -n nbc-bank
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test the deployment
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
