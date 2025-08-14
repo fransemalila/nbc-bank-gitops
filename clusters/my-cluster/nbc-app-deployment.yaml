@@ -26,18 +26,18 @@ spec:
         - containerPort: 5000
           name: http
         env:
-        - name: DB_HOST
+        - name: MYSQL_HOST
           value: "mysql"
         - name: DB_PORT
           value: "3306"
-        - name: DB_NAME
+        - name: MYSQL_DB
           value: "nbc_bank"
-        - name: DB_USER
+        - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
               key: username 
-        - name: DB_PASSWORD
+        - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
