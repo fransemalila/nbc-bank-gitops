@@ -1,0 +1,38 @@
+# Kubernetes
+*.kubeconfig
+*.pem
+*.key
+*.crt
+
+# Secrets and sensitive files
+secrets/
+*.secret
+.env
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.bak
+*.backup
