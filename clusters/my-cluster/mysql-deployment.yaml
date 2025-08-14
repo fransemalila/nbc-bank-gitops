@@ -16,20 +16,23 @@ spec:
       containers:
       - name: mysql
         image: mysql:8.0
+        ports:
+        - containerPort: 3306
         env:
         - name: MYSQL_DATABASE
           value: "nbc_bank"
         - name: MYSQL_USER
-          value: "user"
-        - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: MYSQL_ROOT_PASSWORD
+              key: username 
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: MYSQL_PASSWORD
-        ports:
-        - containerPort: 3306
+              key: password 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: root-password 

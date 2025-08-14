@@ -18,7 +18,7 @@ spec:
         component: frontend
     spec:
       imagePullSecrets:
-        - name: nbc-k8s
+      - name: nbc-k8s
       containers:
       - name: nbc-app
         image: fran123pv/nbc-bank-app:latest
@@ -36,12 +36,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: username
+              key: username 
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: password
+              key: password 
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
