@@ -21,7 +21,7 @@ spec:
         - name: nbc-k8s
       containers:
       - name: nbc-app
-        image: nbc-bank/app:latest
+        image: fran123pv/nbc-bank-app:latest
         ports:
         - containerPort: 8080
           name: http
