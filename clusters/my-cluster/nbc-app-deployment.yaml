@@ -23,7 +23,7 @@ spec:
       - name: nbc-app
         image: fran123pv/nbc-bank-app:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 5000
           name: http
         env:
         - name: DB_HOST
@@ -57,12 +57,12 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 8080
+            port: 5000
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /ready
-            port: 8080
+            port: 5000
           initialDelaySeconds: 5
           periodSeconds: 5
