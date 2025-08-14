@@ -17,6 +17,8 @@ spec:
         app: nbc-app
         component: frontend
     spec:
+      imagePullSecrets:
+        - name: nbc-k8s
       containers:
       - name: nbc-app
         image: nbc-bank/app:latest
