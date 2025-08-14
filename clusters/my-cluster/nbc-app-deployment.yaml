@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nbc-app
-  namespace: nbc-bank
+  namespace: nbc
   labels:
     app: nbc-app
     component: frontend
