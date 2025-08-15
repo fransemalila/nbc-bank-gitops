@@ -18,7 +18,7 @@ spec:
         component: frontend
     spec:
       imagePullSecrets:
-      - name: nbc-k8s
+      - name: nbc-k8s 
       volumes:
       - name: log-volume
         hostPath:

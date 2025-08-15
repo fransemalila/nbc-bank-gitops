@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops_database
+  name: devops-database
   namespace: nbc
   labels:
-    app: devops_database 
+    app: devops-database 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: devops_database 
+      app: devops-database 
   template:
     metadata:
       labels:
-        app: devops_database 
+        app: devops-database 
       containers:
-      - name: devops_database
+      - name: devops-database
         image: mysql:8.0
         ports:
         - containerPort: 3306
