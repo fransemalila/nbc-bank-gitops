@@ -4,16 +4,17 @@ metadata:
   name: devops-database
   namespace: nbc
   labels:
-    app: devops-database 
+    app: devops-database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: devops-database 
+      app: devops-database
   template:
     metadata:
       labels:
-        app: devops-database 
+        app: devops-database
+    spec:
       containers:
       - name: devops-database
         image: mysql:8.0
