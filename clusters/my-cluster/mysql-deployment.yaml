@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: devops_database
   namespace: nbc
 spec:
   replicas: 1
