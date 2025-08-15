@@ -18,7 +18,7 @@ metadata:
   namespace: nbc
 spec:
   selector:
-    app: nbc-bank-app
+    app: nbc-app
   type: LoadBalancer
   ports:
   - protocol: TCP
