@@ -18,38 +18,36 @@ spec:
         component: frontend
     spec:
       imagePullSecrets:
-      - name: nbc-k8s
+      - name: nbc-k8s 
+      volumes: 
+      - name: log-volume
+        hostPath:
+          path: /var/log/nbc_devops
+          type: DirectoryOrCreate
       containers:
       - name: nbc-app
         image: fran123pv/nbc_devops_webservice:1.0.0
-        volumeMounts:
+        volumeMounts: 
         - name: log-volume
           mountPath: /var/log/nbc_devops
         ports:
         - containerPort: 8765
           name: http
-      volumes:
-      - name: log-volume
-        hostPath:
-          path: /var/log/nbc_devops
-          type: DirectoryOrCreate
-        env:
+        env: 
         - name: MYSQL_HOST
           value: "mysql"
-        - name: DB_PORT
-          value: "3306"
         - name: MYSQL_DB
           value: "nbc_bank"
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: username 
+              key: username
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: password 
+              key: password
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
