@@ -35,7 +35,7 @@ spec:
           name: http
         env:
         - name: MYSQL_HOST
-          value: "devops_database"
+          value: "devops-database"
         - name: MYSQL_DB
           value: "nbc_bank"
         - name: MYSQL_USER

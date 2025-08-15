@@ -30,7 +30,7 @@ nbc-bank-gitops/
 - The main banking application
 - Runs 3 copies for reliability
 - Built from `fran123pv/nbc-bank-app:latest`
-- Listens on port 5000
+- Listens on port 8765
 
 ### 🔐 Secrets
 - Database username/password
