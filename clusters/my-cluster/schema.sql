@@ -1,0 +1,13 @@
+USE nbc_bank;
+
+DROP TABLE IF EXISTS transactions;
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    service VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    amount VARCHAR(255) NOT NULL,
+    account VARCHAR(255) NOT NULL,
+    reference VARCHAR(255) NOT NULL UNIQUE,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
