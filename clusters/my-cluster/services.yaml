@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: devops_database
+  name: devops_database 
   namespace: nbc
 spec:
   selector:
-    app: devops_database
+    app: devops_database 
   ports:
   - protocol: TCP
     port: 3306
@@ -18,7 +18,7 @@ metadata:
   namespace: nbc
 spec:
   selector:
-    app: nbc-app
+    app: nbc-app 
   type: LoadBalancer
   ports:
   - protocol: TCP

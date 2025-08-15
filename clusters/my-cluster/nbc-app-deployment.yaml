@@ -18,8 +18,8 @@ spec:
         component: frontend
     spec:
       imagePullSecrets:
-      - name: nbc-k8s 
-      volumes: 
+      - name: nbc-k8s
+      volumes:
       - name: log-volume
         hostPath:
           path: /var/log/nbc_devops
@@ -27,13 +27,13 @@ spec:
       containers:
       - name: nbc-app
         image: fran123pv/nbc_devops_webservice:1.0.0
-        volumeMounts: 
+        volumeMounts:
         - name: log-volume
           mountPath: /var/log/nbc_devops
         ports:
         - containerPort: 8765
           name: http
-        env: 
+        env:
         - name: MYSQL_HOST
           value: "devops_database"
         - name: MYSQL_DB

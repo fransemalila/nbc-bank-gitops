@@ -3,16 +3,17 @@ kind: Deployment
 metadata:
   name: devops_database
   namespace: nbc
+  labels:
+    app: devops_database 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: devops_database
+      app: devops_database 
   template:
     metadata:
       labels:
-        app: devops_database
-    spec:
+        app: devops_database 
       containers:
       - name: devops_database
         image: mysql:8.0
@@ -25,14 +26,14 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: username 
+              key: username
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: password 
+              key: password
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              key: root-password 
+              key: root-password
